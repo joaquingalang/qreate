@@ -11,14 +11,22 @@ const Color kBlueColor200 = Color(0xFF90E0EF);
 const Color kBlueColor100 = Color(0xFFCAF0F8);
 
 // GRAY COLORS
+const Color kGrayColor200 = Color(0xFFE9E9E9);
 const Color kGrayColor100 = Color(0xFFF5F5F5);
 
 // TEXT STYLES
-const TextStyle kOrbitronTitle = TextStyle(
+const TextStyle kOrbitronLarge = TextStyle(
   fontFamily: 'Orbitron',
   fontWeight: FontWeight.bold,
   color: Colors.white,
   fontSize: 44,
+);
+
+const TextStyle kOrbitronMedium = TextStyle(
+  fontFamily: 'Orbitron',
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+  fontSize: 24,
 );
 
 const TextStyle kSubtext36 = TextStyle(
