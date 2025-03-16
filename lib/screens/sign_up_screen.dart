@@ -74,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     // App Name
                     Text(
                       'Qreate',
-                      style: kOrbitronTitle,
+                      style: kOrbitronLarge,
                     ),
 
                     // Offset

@@ -73,7 +73,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     // App Name
                     Text(
                       'Qreate',
-                      style: kOrbitronTitle,
+                      style: kOrbitronLarge,
                     ),
 
                     // Offset
