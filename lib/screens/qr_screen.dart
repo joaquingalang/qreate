@@ -78,7 +78,7 @@ class QrScreen extends StatelessWidget {
                 SizedBox(height: 16),
                 Text(
                   'Title',
-                  style: kTitleStyle,
+                  style: kTitleLarge,
                 ),
               ],
             ),

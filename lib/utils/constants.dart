@@ -29,8 +29,13 @@ const TextStyle kOrbitronMedium = TextStyle(
   fontSize: 24,
 );
 
-const TextStyle kTitleStyle = TextStyle(
+const TextStyle kTitleLarge = TextStyle(
   fontSize: 40,
+  fontWeight: FontWeight.bold,
+);
+
+const TextStyle kTitleMedium = TextStyle(
+  fontSize: 36,
   fontWeight: FontWeight.bold,
 );
 
