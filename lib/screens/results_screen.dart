@@ -29,23 +29,22 @@ class ResultsScreen extends StatelessWidget {
                   ),
                 ),
                 child: SafeArea(
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
+                  child: AppBar(
+                    backgroundColor: Colors.transparent,
+                    title: Text(
+                      'QR Title',
+                      style: kSubtext20.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        'QR Title',
-                        style: kSubtext20.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ),
+                    leading: IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
