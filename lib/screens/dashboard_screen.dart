@@ -12,11 +12,11 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   List<Widget> qrList = [
-    QRCard(),
-    QRCard(),
-    QRCard(),
-    QRCard(),
-    QRCard(),
+    QrCard(),
+    QrCard(),
+    QrCard(),
+    QrCard(),
+    QrCard(),
   ];
 
   @override
