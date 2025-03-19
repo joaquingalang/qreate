@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
 
-class QRCard extends StatelessWidget {
-  const QRCard({
+class QrCard extends StatelessWidget {
+  const QrCard({
     super.key,
   });
 
