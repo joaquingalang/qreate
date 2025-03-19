@@ -44,6 +44,10 @@ const TextStyle kSubtext36 = TextStyle(
   fontWeight: FontWeight.w700,
 );
 
+const TextStyle kSubtext24 = TextStyle(
+  fontSize: 24,
+);
+
 const TextStyle kSubtext20 = TextStyle(
   fontSize: 20,
 );
