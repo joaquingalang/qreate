@@ -89,7 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: cardHeight,
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                 decoration: BoxDecoration(
-                  color: kGrayColor100,
+                  color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
