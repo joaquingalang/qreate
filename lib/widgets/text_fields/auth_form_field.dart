@@ -22,7 +22,7 @@ class AuthFormField extends StatelessWidget {
       obscureText: obscureText,
       decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: kSubtext20.copyWith(color: Colors.grey.shade800),
+          hintStyle: kSubtext20.copyWith(color: Colors.grey.shade600),
           filled: true,
           fillColor: kGrayColor100,
           border: OutlineInputBorder(
