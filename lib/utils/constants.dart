@@ -55,3 +55,11 @@ const TextStyle kSubtext20 = TextStyle(
 const TextStyle kSubtext16 = TextStyle(
   fontSize: 16,
 );
+
+enum QrPattern {
+  classic,
+  rounded,
+  thin,
+  smooth,
+  circles,
+}
