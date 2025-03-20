@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
 import 'package:qreate/widgets/progress_indicators/loading_icon.dart';
 import 'package:qreate/widgets/text_fields/auth_form_field.dart';
+import 'package:qreate/widgets/buttons/pattern_select.dart';
 import 'package:qreate/widgets/buttons/color_picker_button.dart';
 
 class CreateQrScreen extends StatefulWidget {
@@ -17,6 +18,15 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
 
   // Form Values
   String _title = '';
+
+  // Selected Pattern
+  QrPattern selectedPattern = QrPattern.classic;
+
+  void _selectPattern(QrPattern pattern) {
+    setState(() {
+      selectedPattern = pattern;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +150,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                           // Offset
                           SizedBox(height: 18),
 
-                          // Title Label
+                          // Pattern Label
                           Text(
                             'Pattern',
                             style: kSubtext24.copyWith(
@@ -148,9 +158,18 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                           ),
 
                           // Offset
+                          SizedBox(height: 5),
+
+                          // Pattern Options
+                          PatternSelect(
+                            selected: selectedPattern,
+                            onSelect: _selectPattern,
+                          ),
+
+                          // Offset
                           SizedBox(height: 18),
 
-                          // Title Label
+                          // Color Label
                           Text(
                             'Color',
                             style: kSubtext24.copyWith(
@@ -159,7 +178,6 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
 
                           // Offset
                           SizedBox(height: 5),
-
 
                           Row(
                             children: [
