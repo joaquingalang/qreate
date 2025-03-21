@@ -24,7 +24,7 @@ class AuthFormField extends StatelessWidget {
           hintText: hintText,
           hintStyle: kSubtext20.copyWith(color: Colors.grey.shade600),
           filled: true,
-          fillColor: kGrayColor100,
+          fillColor: kGrayColor200,
           border: OutlineInputBorder(
             borderSide: BorderSide(
               width: 0,
