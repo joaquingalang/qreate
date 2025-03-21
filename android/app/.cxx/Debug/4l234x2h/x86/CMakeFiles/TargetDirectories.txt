@@ -1,0 +1,2 @@
+C:/Users/Joaquin/StudioProjects/qreate/android/app/.cxx/Debug/4l234x2h/x86/CMakeFiles/edit_cache.dir
+C:/Users/Joaquin/StudioProjects/qreate/android/app/.cxx/Debug/4l234x2h/x86/CMakeFiles/rebuild_cache.dir
