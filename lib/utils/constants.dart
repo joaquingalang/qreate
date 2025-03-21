@@ -11,8 +11,9 @@ const Color kBlueColor200 = Color(0xFF90E0EF);
 const Color kBlueColor100 = Color(0xFFCAF0F8);
 
 // GRAY COLORS
-const Color kGrayColor200 = Color(0xFFE9E9E9);
-const Color kGrayColor100 = Color(0xFFF5F5F5);
+const Color kGrayColor300 = Color(0xFF323232);
+const Color kGrayColor200 = Color(0xFFF5F5F5);
+const Color kGrayColor100 = Color(0xFFE9E9E9);
 
 // TEXT STYLES
 const TextStyle kOrbitronLarge = TextStyle(
@@ -55,11 +56,3 @@ const TextStyle kSubtext20 = TextStyle(
 const TextStyle kSubtext16 = TextStyle(
   fontSize: 16,
 );
-
-enum QrPattern {
-  classic,
-  rounded,
-  thin,
-  smooth,
-  circles,
-}
