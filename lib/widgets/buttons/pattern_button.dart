@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
+import 'package:qreate/utils/qr_patterns.dart';
 
 class PatternButton extends StatelessWidget {
   const PatternButton({
@@ -22,7 +23,7 @@ class PatternButton extends StatelessWidget {
         height: 64,
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: kGrayColor100,
+          color: kGrayColor200,
           border: Border.all(
           width: (isSelected) ? 2 : 0,
           color: (isSelected) ? kBlueColor300 : Colors.transparent,
