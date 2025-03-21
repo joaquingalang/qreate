@@ -21,7 +21,7 @@ class ColorPickerButton extends StatelessWidget {
         width: 180,
         height: 55,
         decoration: BoxDecoration(
-          color: kGrayColor100,
+          color: kGrayColor200,
           border: Border.all(
               color: Colors.black
           ),
