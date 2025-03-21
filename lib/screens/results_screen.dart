@@ -59,7 +59,7 @@ class ResultsScreen extends StatelessWidget {
             height: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: kGrayColor100.withOpacity(0.65),
+              color: kGrayColor200.withOpacity(0.65),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),
