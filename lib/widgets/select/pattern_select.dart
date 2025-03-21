@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
+import 'package:qreate/utils/qr_patterns.dart';
 import 'package:qreate/widgets/buttons/pattern_button.dart';
 
 class PatternSelect extends StatelessWidget {
