@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
+import 'package:qreate/utils/qr_patterns.dart';
+import 'package:qreate/utils/logos.dart';
+import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
 import 'package:qreate/widgets/progress_indicators/loading_icon.dart';
 import 'package:qreate/widgets/text_fields/auth_form_field.dart';
-import 'package:qreate/widgets/buttons/pattern_select.dart';
+import 'package:qreate/widgets/select/pattern_select.dart';
 import 'package:qreate/widgets/buttons/color_picker_button.dart';
+import 'package:qreate/widgets/select/logo_select.dart';
 
 class CreateQrScreen extends StatefulWidget {
   const CreateQrScreen({super.key});
@@ -22,9 +26,18 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
   // Selected Pattern
   QrPattern selectedPattern = QrPattern.classic;
 
+  // Selected Logos
+  Logos selectedLogo = Logos.none;
+
   void _selectPattern(QrPattern pattern) {
     setState(() {
       selectedPattern = pattern;
+    });
+  }
+
+  void _selectLogo(Logos logo) {
+    setState(() {
+      selectedLogo = logo;
     });
   }
 
@@ -79,7 +92,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
               SizedBox(height: 18),
 
               // App Logo
-              Image.asset(kAppLogoPath, width: qrSize),
+              Image.asset('assets/images/patterns/classic.png', width: qrSize),
 
               // Offset
               SizedBox(height: 36),
@@ -218,7 +231,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                           // Offset
                           SizedBox(height: 18),
 
-                          // Title Label
+                          // Select Logo Label
                           Text(
                             'Select Logo',
                             style: kSubtext24.copyWith(
@@ -226,8 +239,27 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                           ),
 
                           // Offset
-                          SizedBox(height: 500),
+                          SizedBox(height: 5),
 
+                          // Select Logo
+                          LogoSelect(
+                            selected: selectedLogo,
+                            onSelect: _selectLogo,
+                          ),
+
+                          // Offset
+                          SizedBox(height: 18),
+
+                          Center(
+                            child: RoundedRectangleButton(
+                              title: 'Generate QR',
+                              borderRadius: BorderRadius.circular(90),
+                              onPressed: () {},
+                            ),
+                          ),
+
+                          // Offset
+                          SizedBox(height: 18),
                         ],
                       ),
               ),
