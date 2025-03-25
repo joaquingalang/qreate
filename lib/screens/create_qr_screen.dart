@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
 import 'package:qreate/utils/qr_patterns.dart';
 import 'package:qreate/utils/logos.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
 import 'package:qreate/widgets/progress_indicators/loading_icon.dart';
-import 'package:qreate/widgets/text_fields/auth_form_field.dart';
+import 'package:qreate/widgets/text_fields/custom_text_field.dart';
 import 'package:qreate/widgets/select/pattern_select.dart';
 import 'package:qreate/widgets/buttons/color_picker_button.dart';
 import 'package:qreate/widgets/select/logo_select.dart';
@@ -21,10 +22,19 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
   bool _isLoading = false;
 
   // Form Values
+  late final TextEditingController _titleController;
   String _title = '';
+
+  late final TextEditingController _sourceController;
+  String _source = '';
 
   // Selected Pattern
   QrPattern selectedPattern = QrPattern.classic;
+
+  // Colors
+  Color canvasColor = Colors.white;
+  Color squareColor = Colors.black;
+  Color pixelColor = Colors.black;
 
   // Selected Logos
   Logos selectedLogo = Logos.none;
@@ -39,6 +49,15 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
     setState(() {
       selectedLogo = logo;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController();
+    _titleController.text = _title;
+    _sourceController = TextEditingController();
+    _sourceController.text = _source;
   }
 
   @override
@@ -91,8 +110,29 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
               // Offset
               SizedBox(height: 18),
 
-              // App Logo
-              Image.asset('assets/images/patterns/classic.png', width: qrSize),
+              // QR Code
+              Container(
+                width: qrSize,
+                padding: EdgeInsets.all(8),
+                color: canvasColor,
+                child: PrettyQrView.data(
+                  data: _source,
+                  decoration: (selectedLogo == Logos.none)
+                      ? PrettyQrDecoration(
+                          shape: (selectedPattern == QrPattern.circles)
+                              ? const PrettyQrRoundedSymbol()
+                              : const PrettyQrSmoothSymbol(),
+                        )
+                      : PrettyQrDecoration(
+                          shape: (selectedPattern == QrPattern.circles)
+                              ? const PrettyQrRoundedSymbol()
+                              : const PrettyQrSmoothSymbol(),
+                          image: PrettyQrDecorationImage(
+                            image: AssetImage(logoSource[selectedLogo]),
+                          ),
+                        ),
+                ),
+              ),
 
               // Offset
               SizedBox(height: 36),
@@ -132,10 +172,13 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                           SizedBox(height: 5),
 
                           // Title Form Field
-                          AuthFormField(
+                          CustomTextField(
                             hintText: 'Survey Form',
-                            onSaved: (value) {
-                              _title = value!;
+                            controller: _titleController,
+                            onChanged: (value) {
+                              setState(() {
+                                _title = value;
+                              });
                             },
                           ),
 
@@ -153,10 +196,13 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                           SizedBox(height: 5),
 
                           // Source Form Field
-                          AuthFormField(
+                          CustomTextField(
                             hintText: 'www.example.com',
-                            onSaved: (value) {
-                              _title = value!;
+                            controller: _sourceController,
+                            onChanged: (value) {
+                              setState(() {
+                                _source = value;
+                              });
                             },
                           ),
 
