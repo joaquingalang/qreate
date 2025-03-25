@@ -16,7 +16,7 @@ enum Logos {
   github
 }
 
-Map<Logos, dynamic> logoData = {
+Map<Logos, dynamic> logoImages = {
   Logos.none: Icon(
     Icons.not_interested,
     color: kGrayColor300,
@@ -67,4 +67,19 @@ Map<Logos, dynamic> logoData = {
     'assets/images/icons/github_icon.png',
     height: 30,
   ),
+};
+
+Map<Logos, dynamic> logoSource = {
+  Logos.none: '',
+  Logos.upload: '',
+  Logos.facebook: 'assets/images/icons/facebook_icon.png',
+  Logos.instagram: 'assets/images/icons/instagram_icon.png',
+  Logos.linkedin: 'assets/images/icons/linkedin_icon.png',
+  Logos.x: 'assets/images/icons/x_icon.png',
+  Logos.youtube:'assets/images/icons/youtube_icon.png',
+  Logos.tiktok: 'assets/images/icons/tiktok_icon.png',
+  Logos.pinterest: 'assets/images/icons/pinterest_icon.png',
+  Logos.shopify: 'assets/images/icons/shopify_icon.png',
+  Logos.gcash: 'assets/images/icons/gcash_icon.png',
+  Logos.github: 'assets/images/icons/github_icon.png',
 };
