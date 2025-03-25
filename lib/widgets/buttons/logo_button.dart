@@ -29,7 +29,7 @@ class LogoButton extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: logoData[logo],
+          child: logoImages[logo],
         ),
       ),
     );
