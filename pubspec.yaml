@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   supabase_flutter: ^2.8.4
   pretty_qr_code: ^3.3.0
+  flex_color_picker: ^3.7.0
 
 dev_dependencies:
   flutter_test:
