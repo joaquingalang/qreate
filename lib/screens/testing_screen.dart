@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:qreate/widgets/progress_indicators/loading_icon.dart';
 
 class TestingScreen extends StatefulWidget {
@@ -10,31 +11,33 @@ class TestingScreen extends StatefulWidget {
 }
 
 class _TestingScreenState extends State<TestingScreen> {
-  bool _isStopped = false;
+  late QrCode qrCode;
+
+  late QrImage qrImage;
+
+  @override
+  void initState() {
+    super.initState();
+    QrCode qrCode = QrCode.fromData(
+      data: 'www.wikipedia.com',
+      errorCorrectLevel: QrErrorCorrectLevel.H,
+    );
+    qrImage = QrImage(qrCode);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          LoadingIcon(
-            isStopped: _isStopped,
-            icon: Icon(
-              Icons.qr_code,
-              size: 100,
+      body: Center(
+        child: Transform.scale(
+          scale: 0.5,
+          child: PrettyQrView(
+            qrImage: qrImage,
+            decoration: const PrettyQrDecoration(
+              image: PrettyQrDecorationImage(image: AssetImage('assets/images/icons/facebook_icon.png'))
             ),
           ),
-          SizedBox(height: 50),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                _isStopped = !_isStopped;
-              });
-            },
-            child: Text('STOP / PLAY'),
-          ),
-        ],
+        ),
       ),
     );
   }
