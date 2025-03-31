@@ -79,24 +79,14 @@ class ResultsScreen extends StatelessWidget {
                   'Title',
                   style: kTitleMedium,
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 24),
                 RoundedRectangleButton(
-                  title: 'Download',
+                  title: 'DOWNLOAD',
                   borderRadius: BorderRadius.circular(30),
                   onPressed: () {},
                 ),
                 RoundedRectangleButton(
-                  title: 'Copy To Clipboard',
-                  borderRadius: BorderRadius.circular(30),
-                  onPressed: () {},
-                ),
-                RoundedRectangleButton(
-                  title: 'Edit Details',
-                  borderRadius: BorderRadius.circular(30),
-                  onPressed: () {},
-                ),
-                RoundedRectangleButton(
-                  title: 'Delete QR',
+                  title: 'SHARE',
                   borderRadius: BorderRadius.circular(30),
                   onPressed: () {},
                 ),
