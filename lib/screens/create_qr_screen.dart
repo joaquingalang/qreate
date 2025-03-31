@@ -124,27 +124,13 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
               SizedBox(height: 18),
 
               // QR Code
-              Container(
-                width: qrSize,
-                padding: EdgeInsets.all(8),
-                color: canvasColor,
-                child: PrettyQrView.data(
-                  data: _source,
-                  decoration: PrettyQrDecoration(
-                    shape: (selectedPattern == QrPattern.circles)
-                        ? PrettyQrRoundedSymbol(
-                            color: pixelColor,
-                          )
-                        : PrettyQrSmoothSymbol(
-                            color: pixelColor,
-                          ),
-                    image: (selectedLogo == Logos.none)
-                        ? null
-                        : PrettyQrDecorationImage(
-                            image: AssetImage(logoSource[selectedLogo]),
-                          ),
-                  ),
-                ),
+              QrView(
+                qrSize: qrSize,
+                source: source,
+                canvasColor: canvasColor,
+                pixelColor: pixelColor,
+                selectedPattern: selectedPattern,
+                selectedLogo: selectedLogo,
               ),
 
               // Offset
