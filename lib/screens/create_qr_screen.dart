@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:qreate/screens/results_screen.dart';
 import 'package:qreate/utils/constants.dart';
 import 'package:qreate/utils/qr_patterns.dart';
 import 'package:qreate/utils/logos.dart';
-import 'package:pretty_qr_code/pretty_qr_code.dart';
+import 'package:qreate/models/qr_data.dart';
+import 'package:qreate/widgets/qr/qr_view.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
 import 'package:qreate/widgets/progress_indicators/loading_icon.dart';
 import 'package:qreate/widgets/text_fields/custom_text_field.dart';
@@ -23,17 +25,16 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
 
   // Form Values
   late final TextEditingController _titleController;
-  String _title = '';
+  String title = '';
 
   late final TextEditingController _sourceController;
-  String _source = '';
+  String source = '';
 
   // Selected Pattern
   QrPattern selectedPattern = QrPattern.classic;
 
   // Colors
   Color canvasColor = Colors.white;
-  Color squareColor = Colors.black;
   Color pixelColor = Colors.black;
 
   // Selected Logos
@@ -51,13 +52,25 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
     });
   }
 
+  QrData _generateQr() {
+    QrData newQrCode = QrData(
+      title: title,
+      source: source,
+      pattern: selectedPattern,
+      canvasColor: canvasColor,
+      pixelColor: pixelColor,
+      logo: selectedLogo,
+    );
+    return newQrCode;
+  }
+
   @override
   void initState() {
     super.initState();
     _titleController = TextEditingController();
-    _titleController.text = _title;
+    _titleController.text = title;
     _sourceController = TextEditingController();
-    _sourceController.text = _source;
+    _sourceController.text = source;
   }
 
   @override
@@ -177,7 +190,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                             controller: _titleController,
                             onChanged: (value) {
                               setState(() {
-                                _title = value;
+                                title = value;
                               });
                             },
                           ),
@@ -201,7 +214,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                             controller: _sourceController,
                             onChanged: (value) {
                               setState(() {
-                                _source = value;
+                                source = value;
                               });
                             },
                           ),
