@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
+import 'package:qreate/models/qr_data.dart';
+import 'package:qreate/utils/logos.dart';
+import 'package:qreate/utils/qr_patterns.dart';
+import 'package:qreate/widgets/qr/qr_view.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
 
 class ResultsScreen extends StatelessWidget {
-  const ResultsScreen({super.key});
+  const ResultsScreen({super.key, required this.qrData});
+
+  final QrData qrData;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +17,7 @@ class ResultsScreen extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     double barHeight = screenHeight * (1 / 6);
-    double qrSize = screenWidth * (1 / 2);
+    double qrSize = screenWidth * (3 / 4);
 
     return Scaffold(
       body: Stack(
@@ -32,14 +38,14 @@ class ResultsScreen extends StatelessWidget {
                   child: AppBar(
                     backgroundColor: Colors.transparent,
                     title: Text(
-                      'QR Title',
+                      qrData.title,
                       style: kSubtext20.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     leading: IconButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.pop(context),
                       icon: Icon(
                         Icons.arrow_back,
                         color: Colors.white,
@@ -72,12 +78,20 @@ class ResultsScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/images/qreate_logo_gray.png',
-                    width: qrSize),
+                // QR Code
+                QrView(
+                  qrSize: qrSize,
+                  source: qrData.source,
+                  canvasColor: qrData.canvasColor,
+                  pixelColor: qrData.pixelColor,
+                  selectedLogo: qrData.logo,
+                  selectedPattern: qrData.pattern,
+                ),
                 SizedBox(height: 10),
                 Text(
-                  'Title',
+                  qrData.title,
                   style: kTitleMedium,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 24),
                 RoundedRectangleButton(
