@@ -117,20 +117,20 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                 color: canvasColor,
                 child: PrettyQrView.data(
                   data: _source,
-                  decoration: (selectedLogo == Logos.none)
-                      ? PrettyQrDecoration(
-                          shape: (selectedPattern == QrPattern.circles)
-                              ? const PrettyQrRoundedSymbol()
-                              : const PrettyQrSmoothSymbol(),
-                        )
-                      : PrettyQrDecoration(
-                          shape: (selectedPattern == QrPattern.circles)
-                              ? const PrettyQrRoundedSymbol()
-                              : const PrettyQrSmoothSymbol(),
-                          image: PrettyQrDecorationImage(
+                  decoration: PrettyQrDecoration(
+                    shape: (selectedPattern == QrPattern.circles)
+                        ? PrettyQrRoundedSymbol(
+                            color: pixelColor,
+                          )
+                        : PrettyQrSmoothSymbol(
+                            color: pixelColor,
+                          ),
+                    image: (selectedLogo == Logos.none)
+                        ? null
+                        : PrettyQrDecorationImage(
                             image: AssetImage(logoSource[selectedLogo]),
                           ),
-                        ),
+                  ),
                 ),
               ),
 
@@ -243,33 +243,25 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                               Expanded(
                                 child: ColorPickerButton(
                                   title: 'Canvas',
-                                  onPressed: () {},
+                                  color: canvasColor,
+                                  onColorChanged: (Color color) {
+                                    setState(() {
+                                      canvasColor = color;
+                                    });
+                                  },
                                 ),
                               ),
                               SizedBox(width: 10),
-                              Expanded(
-                                child: ColorPickerButton(
-                                  title: 'Squares',
-                                  onPressed: () {},
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          // Offset
-                          SizedBox(height: 10),
-
-                          Row(
-                            children: [
                               Expanded(
                                 child: ColorPickerButton(
                                   title: 'Pixels',
-                                  onPressed: () {},
+                                  color: pixelColor,
+                                  onColorChanged: (Color color) {
+                                    setState(() {
+                                      pixelColor = color;
+                                    });
+                                  },
                                 ),
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: SizedBox(),
                               ),
                             ],
                           ),
