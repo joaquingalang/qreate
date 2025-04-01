@@ -291,7 +291,19 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                             child: RoundedRectangleButton(
                               title: 'Generate QR',
                               borderRadius: BorderRadius.circular(90),
-                              onPressed: () {},
+                              onPressed: () {
+                                // Save Qr Data
+                                final QrData qrData = _generateQr();
+
+                                // Navigate To Results Screen
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ResultsScreen(qrData: qrData),
+                                  ),
+                                );
+                              },
                             ),
                           ),
 
