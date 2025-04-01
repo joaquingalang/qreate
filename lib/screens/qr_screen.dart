@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
+import 'package:qreate/models/qr_data.dart';
+import 'package:qreate/widgets/qr/qr_view.dart';
 
 class QrScreen extends StatelessWidget {
-  const QrScreen({super.key});
+  const QrScreen({super.key, required this.qrData});
+
+  final QrData qrData;
 
   @override
   Widget build(BuildContext context) {
@@ -71,11 +75,20 @@ class QrScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/images/qreate_logo_gray.png',
-                    width: qrSize),
+
+                // QR Code
+                QrView(
+                  qrSize: qrSize,
+                  source: qrData.source,
+                  canvasColor: qrData.canvasColor,
+                  pixelColor: qrData.pixelColor,
+                  selectedLogo: qrData.logo,
+                  selectedPattern: qrData.pattern,
+                ),
+
                 SizedBox(height: 16),
                 Text(
-                  'Title',
+                  qrData.title,
                   style: kTitleLarge,
                 ),
               ],
