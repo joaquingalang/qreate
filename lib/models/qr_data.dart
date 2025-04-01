@@ -7,10 +7,10 @@ class QrData {
   const QrData({
     required this.title,
     required this.source,
-    required this.pattern,
-    required this.canvasColor,
-    required this.pixelColor,
-    required this.logo,
+    this.pattern = QrPattern.classic,
+    this.canvasColor = Colors.white,
+    this.pixelColor = Colors.black,
+    this.logo = Logos.none,
   });
 
   final String title;
