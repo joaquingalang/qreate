@@ -16,7 +16,7 @@ enum Logos {
   github
 }
 
-Map<Logos, dynamic> logoImages = {
+final Map<Logos, dynamic> logoImages = {
   Logos.none: Icon(
     Icons.not_interested,
     color: kGrayColor300,
@@ -69,7 +69,7 @@ Map<Logos, dynamic> logoImages = {
   ),
 };
 
-Map<Logos, dynamic> logoSource = {
+final Map<Logos, dynamic> logoSource = {
   Logos.none: '',
   Logos.upload: '',
   Logos.facebook: 'assets/images/icons/facebook_icon.png',
@@ -82,4 +82,34 @@ Map<Logos, dynamic> logoSource = {
   Logos.shopify: 'assets/images/icons/shopify_icon.png',
   Logos.gcash: 'assets/images/icons/gcash_icon.png',
   Logos.github: 'assets/images/icons/github_icon.png',
+};
+
+final Map<Logos, String> logoToString = {
+  Logos.none: 'none',
+  Logos.upload: 'upload',
+  Logos.facebook: 'facebook',
+  Logos.instagram: 'instagram',
+  Logos.linkedin: 'linkedin',
+  Logos.x: 'x',
+  Logos.youtube: 'youtube',
+  Logos.tiktok: 'tiktok',
+  Logos.pinterest: 'pinterest',
+  Logos.shopify: 'shopify',
+  Logos.gcash: 'gcash',
+  Logos.github: 'github',
+};
+
+final Map<String, Logos> stringToLogo = {
+  'none': Logos.none,
+  'upload': Logos.upload,
+  'facebook': Logos.facebook,
+  'instagram': Logos.instagram,
+  'linkedin': Logos.linkedin,
+  'x': Logos.x,
+  'youtube': Logos.youtube,
+  'tiktok': Logos.tiktok,
+  'pinterest': Logos.pinterest,
+  'shopify': Logos.shopify,
+  'gcash': Logos.gcash,
+  'github': Logos.github,
 };
