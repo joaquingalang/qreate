@@ -20,12 +20,12 @@ Map<Logos, dynamic> logoImages = {
   Logos.none: Icon(
     Icons.not_interested,
     color: kGrayColor300,
-    size: 30,
+    size: 20,
   ),
   Logos.upload: Icon(
     Icons.upload,
     color: kGrayColor300,
-    size: 30,
+    size: 20,
   ),
   Logos.facebook: Image.asset(
     'assets/images/icons/facebook_icon.png',
