@@ -40,6 +40,11 @@ const TextStyle kTitleMedium = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+const TextStyle kTitleSmall = TextStyle(
+  fontSize: 28,
+  fontWeight: FontWeight.bold,
+);
+
 const TextStyle kSubtext36 = TextStyle(
   fontSize: 36,
   fontWeight: FontWeight.w700,
@@ -47,6 +52,11 @@ const TextStyle kSubtext36 = TextStyle(
 
 const TextStyle kSubtext24 = TextStyle(
   fontSize: 24,
+);
+
+const TextStyle kSubtext24B = TextStyle(
+  fontSize: 24,
+  fontWeight: FontWeight.bold,
 );
 
 const TextStyle kSubtext20 = TextStyle(
