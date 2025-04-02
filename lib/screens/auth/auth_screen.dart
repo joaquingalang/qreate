@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qreate/screens/sign_in_screen.dart';
-import 'package:qreate/screens/sign_up_screen.dart';
+import 'package:qreate/screens/auth/sign_in_screen.dart';
+import 'package:qreate/screens/auth/sign_up_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
