@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:qreate/utils/qr_patterns.dart';
 import 'package:qreate/utils/logos.dart';
+import 'package:qreate/utils/color_helpers.dart';
 
 class QrCode {
   const QrCode({
@@ -15,7 +14,7 @@ class QrCode {
     this.logo = Logos.none,
   });
 
-  final String? id;
+  final int? id;
   final String title;
   final String source;
   final Color canvasColor;
@@ -29,10 +28,10 @@ class QrCode {
       id: map['id'],
       title: map['title'],
       source: map['source'],
-      canvasColor: map['canvas_color'],
-      pixelColor: map['pixel_color'],
-      pattern: map['pattern'],
-      logo: map['logo'],
+      canvasColor: stringToColor(map['canvas_color']),
+      pixelColor: stringToColor(map['pixel_color']),
+      pattern: stringToPattern[map['pattern']]!,
+      logo: stringToLogo[map['logo']]!,
     );
   }
 
@@ -42,12 +41,11 @@ class QrCode {
       'id': id,
       'title': title,
       'source': source,
-      'canvas_color': canvasColor,
-      'pixel_color': pixelColor,
-      'pattern': pattern,
-      'logo': logo,
+      'canvas_color': colorToString(canvasColor),
+      'pixel_color': colorToString(pixelColor),
+      'pattern': patternToString[pattern],
+      'logo': logoToString[logo],
     };
   }
-
 
 }
