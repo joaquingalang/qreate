@@ -4,10 +4,10 @@ import 'package:qreate/utils/constants.dart';
 import 'package:qreate/utils/qr_patterns.dart';
 import 'package:qreate/utils/logos.dart';
 import 'package:qreate/models/qr_data.dart';
+import 'package:qreate/widgets/app_bar/qreaet_app_bar.dart';
 import 'package:qreate/widgets/qr/qr_view.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
-import 'package:qreate/widgets/progress_indicators/loading_icon.dart';
-import 'package:qreate/widgets/text_fields/custom_text_field.dart';
+import 'package:qreate/widgets/text_fields/qreate_text_field.dart';
 import 'package:qreate/widgets/select/pattern_select.dart';
 import 'package:qreate/widgets/buttons/color_picker_button.dart';
 import 'package:qreate/widgets/select/logo_select.dart';
@@ -20,9 +20,6 @@ class CreateQrScreen extends StatefulWidget {
 }
 
 class _CreateQrScreenState extends State<CreateQrScreen> {
-  // Screen State
-  bool _isLoading = false;
-
   // Form Values
   late final TextEditingController _titleController;
   String title = '';
@@ -78,7 +75,6 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
     // Get Responsive Height Of All Components
     double screenWidth = MediaQuery.of(context).size.width;
     double qrSize = screenWidth * (3 / 7);
-    double buttonWidth = screenWidth * (2 / 5);
 
     return Scaffold(
       body: Container(
@@ -98,27 +94,11 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
         ),
 
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: ClampingScrollPhysics(),
           child: Column(
             children: [
               // Screen App Bar
-              AppBar(
-                backgroundColor: Colors.transparent,
-                title: Text(
-                  'Generate New QR',
-                  style: kSubtext20.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                leading: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              QreateAppBar(title: 'Generate New QR'),
 
               // Offset
               SizedBox(height: 18),
@@ -147,14 +127,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                     topRight: Radius.circular(20),
                   ),
                 ),
-                child: (_isLoading)
-                    ? LoadingIcon(
-                        icon: Icon(
-                          Icons.qr_code,
-                          size: 72,
-                        ),
-                      )
-                    : Column(
+                child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Offset
@@ -163,21 +136,18 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                           // Title Label
                           Text(
                             'Title',
-                            style: kSubtext24.copyWith(
-                                fontWeight: FontWeight.bold),
+                            style: kSubtext24B,
                           ),
 
                           // Offset
                           SizedBox(height: 5),
 
                           // Title Form Field
-                          CustomTextField(
+                          QreateTextField(
                             hintText: 'Survey Form',
                             controller: _titleController,
                             onChanged: (value) {
-                              setState(() {
-                                title = value;
-                              });
+                              setState(() => title = value);
                             },
                           ),
 
@@ -185,23 +155,17 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                           SizedBox(height: 18),
 
                           // Title Label
-                          Text(
-                            'Source',
-                            style: kSubtext24.copyWith(
-                                fontWeight: FontWeight.bold),
-                          ),
+                          Text('Source', style: kSubtext24B),
 
                           // Offset
                           SizedBox(height: 5),
 
                           // Source Form Field
-                          CustomTextField(
+                          QreateTextField(
                             hintText: 'www.example.com',
                             controller: _sourceController,
                             onChanged: (value) {
-                              setState(() {
-                                source = value;
-                              });
+                              setState(() => source = value);
                             },
                           ),
 
@@ -209,11 +173,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                           SizedBox(height: 18),
 
                           // Pattern Label
-                          Text(
-                            'Pattern',
-                            style: kSubtext24.copyWith(
-                                fontWeight: FontWeight.bold),
-                          ),
+                          Text('Pattern', style: kSubtext24B),
 
                           // Offset
                           SizedBox(height: 5),
@@ -228,11 +188,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                           SizedBox(height: 18),
 
                           // Color Label
-                          Text(
-                            'Color',
-                            style: kSubtext24.copyWith(
-                                fontWeight: FontWeight.bold),
-                          ),
+                          Text('Color', style: kSubtext24B),
 
                           // Offset
                           SizedBox(height: 5),
@@ -244,9 +200,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                                   title: 'Canvas',
                                   color: canvasColor,
                                   onColorChanged: (Color color) {
-                                    setState(() {
-                                      canvasColor = color;
-                                    });
+                                    setState(() => canvasColor = color);
                                   },
                                 ),
                               ),
@@ -256,9 +210,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                                   title: 'Pixels',
                                   color: pixelColor,
                                   onColorChanged: (Color color) {
-                                    setState(() {
-                                      pixelColor = color;
-                                    });
+                                    setState(() => pixelColor = color);
                                   },
                                 ),
                               ),
@@ -269,11 +221,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                           SizedBox(height: 18),
 
                           // Select Logo Label
-                          Text(
-                            'Select Logo',
-                            style: kSubtext24.copyWith(
-                                fontWeight: FontWeight.bold),
-                          ),
+                          Text('Select Logo', style: kSubtext24B),
 
                           // Offset
                           SizedBox(height: 5),
@@ -300,7 +248,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        ResultsScreen(qrData: qrData),
+                                        QrScreen(qrData: qrData),
                                   ),
                                 );
                               },
