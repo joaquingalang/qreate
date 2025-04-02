@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qreate/screens/auth_screen.dart';
+import 'package:qreate/screens/auth/auth_screen.dart';
 import 'package:qreate/screens/dashboard_screen.dart';
 import 'package:qreate/services/auth/auth_service.dart';
 import 'package:qreate/widgets/progress_indicators/loading_icon.dart';
