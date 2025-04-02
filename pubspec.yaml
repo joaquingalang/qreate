@@ -37,6 +37,10 @@ dependencies:
   supabase_flutter: ^2.8.4
   pretty_qr_code: ^3.3.0
   flex_color_picker: ^3.7.0
+  path_provider: ^2.1.5
+  image_picker: ^1.1.2
+  image_gallery_saver_plus: ^4.0.1
+  share_plus: ^10.1.4
 
 dev_dependencies:
   flutter_test:
