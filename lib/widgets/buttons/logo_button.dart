@@ -19,6 +19,8 @@ class LogoButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
+        width: 45,
+        height: 45,
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: kGrayColor200,

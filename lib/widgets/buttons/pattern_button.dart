@@ -19,8 +19,8 @@ class PatternButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: 64,
-        height: 64,
+        width: 60,
+        height: 60,
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: kGrayColor200,
