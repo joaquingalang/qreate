@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
+import 'package:qreate/services/auth/auth_service.dart';
 import 'package:qreate/widgets/text_fields/auth_form_field.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
 import 'package:qreate/widgets/progress_indicators/loading_icon.dart';
@@ -14,14 +15,41 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+
+  // Supabase Authentication Service
+  final AuthService _auth = AuthService();
+
   // Screen State
   bool _isLoading = false;
 
-  // Form Content
+  // Sign-In Form Key & Content
+  final _signInFormKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
 
-  // TODO: Validate Form & Login Method
+  Future<void> _signIn() async {
+    // Dismiss Keyboard & Mark As Loading
+    FocusScope.of(context).unfocus();
+    setState(() => _isLoading = true);
+
+    // Retrieve & Validate Form Data
+    FormState formData = _signInFormKey.currentState!;
+    if (formData.validate()) {
+      // Save Form State
+      formData.save();
+
+      // TODO: Check if passwords match
+      try {
+        final result = await _auth.signInWithEmailPassword(email: _email, password: _password);
+      } catch (e) {
+        print('Sign-In Error: $e');
+      }
+    }
+
+    // Stop Loading State
+    setState(() => _isLoading = false);
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,79 +129,82 @@ class _SignInScreenState extends State<SignInScreen> {
                           size: 72,
                         ),
                       )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Form Message
-                          Text('Welcome back!', style: kSubtext36),
-                          Text('Login to get started.', style: kSubtext20),
+                    : Form(
+                      key: _signInFormKey,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Form Message
+                            Text('Welcome back!', style: kSubtext36),
+                            Text('Login to get started.', style: kSubtext20),
 
-                          // Offset
-                          SizedBox(
-                            height: 18,
-                          ),
-
-                          // Email Text Field
-                          AuthFormField(
-                            hintText: 'Email',
-                            onSaved: (value) {
-                              _email = value!;
-                            },
-                          ),
-
-                          // Offset
-                          SizedBox(height: 16),
-
-                          // Password Text Field
-                          AuthFormField(
-                            hintText: 'Password',
-                            obscureText: true,
-                            onSaved: (value) {
-                              _password = value!;
-                            },
-                          ),
-
-                          // Offset
-                          SizedBox(height: 10),
-
-                          // Password Reset Button
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Text('Forgot Password', style: kSubtext16),
+                            // Offset
+                            SizedBox(
+                              height: 18,
                             ),
-                          ),
 
-                          // Offset
-                          SizedBox(height: topOffset),
+                            // Email Text Field
+                            AuthFormField(
+                              hintText: 'Email',
+                              onSaved: (value) {
+                                _email = value!;
+                              },
+                            ),
 
-                          // Sign In Button
-                          RoundedRectangleButton(
-                            title: 'SIGN IN',
-                            onPressed: () {},
-                          ),
+                            // Offset
+                            SizedBox(height: 16),
 
-                          // Authentication Switch
-                          Align(
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text('Not a member yet?', style: kSubtext16),
-                                TextButton(
-                                  onPressed: widget.onTap,
-                                  child: Text(
-                                    'Sign Up',
-                                    style: kSubtext16.copyWith(
-                                        color: kBlueColor400),
+                            // Password Text Field
+                            AuthFormField(
+                              hintText: 'Password',
+                              obscureText: true,
+                              onSaved: (value) {
+                                _password = value!;
+                              },
+                            ),
+
+                            // Offset
+                            SizedBox(height: 10),
+
+                            // Password Reset Button
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Text('Forgot Password', style: kSubtext16),
+                              ),
+                            ),
+
+                            // Offset
+                            SizedBox(height: topOffset),
+
+                            // Sign In Button
+                            RoundedRectangleButton(
+                              title: 'SIGN IN',
+                              onPressed: _signIn,
+                            ),
+
+                            // Authentication Switch
+                            Align(
+                              alignment: Alignment.center,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Not a member yet?', style: kSubtext16),
+                                  TextButton(
+                                    onPressed: widget.onTap,
+                                    child: Text(
+                                      'Sign Up',
+                                      style: kSubtext16.copyWith(
+                                          color: kBlueColor400),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                    ),
               ),
             ],
           ),
