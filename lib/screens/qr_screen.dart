@@ -7,6 +7,7 @@ import 'package:qreate/utils/constants.dart';
 import 'package:qreate/models/qr_data.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:qreate/widgets/app_bar/qreate_app_bar.dart';
 import 'package:qreate/widgets/qr/qr_view.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
 import 'package:share_plus/share_plus.dart';
@@ -54,23 +55,7 @@ class _QrScreenState extends State<QrScreen> {
                   ),
                 ),
                 child: SafeArea(
-                  child: AppBar(
-                    backgroundColor: Colors.transparent,
-                    title: Text(
-                      widget.qrData.title,
-                      style: kSubtext20.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    leading: IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                  child: QreateAppBar(context: context, title: widget.qrData.title),
                 ),
               ),
             ],

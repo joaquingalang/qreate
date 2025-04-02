@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:qreate/screens/results_screen.dart';
+import 'package:qreate/screens/qr_screen.dart';
 import 'package:qreate/utils/constants.dart';
 import 'package:qreate/utils/qr_patterns.dart';
 import 'package:qreate/utils/logos.dart';
 import 'package:qreate/models/qr_data.dart';
-import 'package:qreate/widgets/app_bar/qreaet_app_bar.dart';
+import 'package:qreate/widgets/app_bar/qreate_app_bar.dart';
 import 'package:qreate/widgets/qr/qr_view.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
 import 'package:qreate/widgets/text_fields/qreate_text_field.dart';
@@ -98,7 +98,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
           child: Column(
             children: [
               // Screen App Bar
-              QreateAppBar(title: 'Generate New QR'),
+              QreateAppBar(context: context, title: 'Generate New QR'),
 
               // Offset
               SizedBox(height: 18),
