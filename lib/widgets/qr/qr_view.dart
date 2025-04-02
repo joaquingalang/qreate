@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
 import 'package:qreate/utils/qr_patterns.dart';
 import 'package:qreate/utils/logos.dart';
-import 'package:qreate/models/qr_data.dart';
+import 'package:qreate/models/qr_code.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
 class QrView extends StatelessWidget {

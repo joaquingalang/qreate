@@ -3,7 +3,7 @@ import 'package:qreate/screens/qr_screen.dart';
 import 'package:qreate/utils/constants.dart';
 import 'package:qreate/utils/qr_patterns.dart';
 import 'package:qreate/utils/logos.dart';
-import 'package:qreate/models/qr_data.dart';
+import 'package:qreate/models/qr_code.dart';
 import 'package:qreate/widgets/app_bar/qreate_app_bar.dart';
 import 'package:qreate/widgets/qr/qr_view.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
@@ -49,8 +49,8 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
     });
   }
 
-  QrData _generateQr() {
-    QrData newQrCode = QrData(
+  QrCode _generateQr() {
+    QrCode newQrCode = QrCode(
       title: title,
       source: source,
       pattern: selectedPattern,
@@ -241,7 +241,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                               borderRadius: BorderRadius.circular(90),
                               onPressed: () {
                                 // Save Qr Data
-                                final QrData qrData = _generateQr();
+                                final QrCode qrData = _generateQr();
 
                                 // Navigate To Results Screen
                                 Navigator.push(

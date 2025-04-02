@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:qreate/utils/constants.dart';
-import 'package:qreate/models/qr_data.dart';
+import 'package:qreate/models/qr_code.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qreate/widgets/app_bar/qreate_app_bar.dart';
@@ -16,7 +16,7 @@ class QrScreen extends StatefulWidget {
   QrScreen({super.key, required this.qrData});
 
   // Qr Data
-  final QrData qrData;
+  final QrCode qrData;
 
   @override
   State<QrScreen> createState() => _QrScreenState();
