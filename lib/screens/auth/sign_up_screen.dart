@@ -85,7 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         // Scroll View To Avoid Keyboard Overflow
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: ClampingScrollPhysics(),
           child: Column(
             children: [
               // Logo & Name

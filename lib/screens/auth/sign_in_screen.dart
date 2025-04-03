@@ -83,7 +83,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
         // Scroll View To Avoid Keyboard Overflow
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: ClampingScrollPhysics(),
           child: Column(
             children: [
               // Logo & Name
