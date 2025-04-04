@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qreate/services/auth/auth_manager.dart';
 import 'package:qreate/utils/constants.dart';
 
 class QreateAppBar extends StatelessWidget {
@@ -23,7 +24,12 @@ class QreateAppBar extends StatelessWidget {
         ),
       ),
       leading: IconButton(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AuthManager(),
+          ),
+        ),
         icon: Icon(
           Icons.arrow_back,
           color: Colors.white,
