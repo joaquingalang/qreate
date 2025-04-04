@@ -57,7 +57,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: StreamBuilder(
           stream: _qrDatabase.getStream(),
           builder: (context, snapshot) {
-            print('Stream Event: ${snapshot.data}');
             if (!snapshot.hasData) {
               return LoadingIcon(
                 icon: Icon(
