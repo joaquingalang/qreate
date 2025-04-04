@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:qreate/screens/qr_screen.dart';
+import 'package:qreate/services/database/qr_database.dart';
 import 'package:qreate/utils/constants.dart';
 import 'package:qreate/utils/qr_patterns.dart';
 import 'package:qreate/utils/logos.dart';
 import 'package:qreate/models/qr_code.dart';
+import 'package:qreate/services/auth/auth_service.dart';
 import 'package:qreate/widgets/app_bar/qreate_app_bar.dart';
 import 'package:qreate/widgets/qr/qr_view.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
@@ -22,6 +24,13 @@ class UpdateQrScreen extends StatefulWidget {
 }
 
 class _UpdateQrScreenState extends State<UpdateQrScreen> {
+
+  // Supabase Authentication Service
+  final AuthService _auth = AuthService();
+
+  // Supabase QR Database
+  final QrDatabase _qrDatabase = QrDatabase();
+
   // Form Values
   late final TextEditingController _titleController;
   late String title;
@@ -51,8 +60,10 @@ class _UpdateQrScreenState extends State<UpdateQrScreen> {
     });
   }
 
-  QrCode _generateQr() {
-    QrCode newQrCode = QrCode(
+  Future<QrCode> _updateQr() async {
+    final String? userId = _auth.getCurrentUserId();
+    QrCode newQr = QrCode(
+      userId: userId,
       title: title,
       source: source,
       pattern: selectedPattern,
@@ -60,23 +71,28 @@ class _UpdateQrScreenState extends State<UpdateQrScreen> {
       pixelColor: pixelColor,
       logo: selectedLogo,
     );
-    return newQrCode;
+    await _qrDatabase.updateQr(widget.qrData, newQr);
+    return newQr;
   }
 
   void _initializeQr() {
-    _titleController.text = widget.qrData.title;
-    _sourceController.text = widget.qrData.source;
-    canvasColor = widget.qrData.canvasColor;
-    pixelColor = widget.qrData.pixelColor;
-    selectedPattern = widget.qrData.pattern;
-    selectedLogo = widget.qrData.logo;
+    setState(() {
+      _titleController = TextEditingController();
+      _titleController.text = widget.qrData.title;
+      _sourceController = TextEditingController();
+      _sourceController.text = widget.qrData.source;
+      title = widget.qrData.title;
+      source = widget.qrData.source;
+      canvasColor = widget.qrData.canvasColor;
+      pixelColor = widget.qrData.pixelColor;
+      selectedPattern = widget.qrData.pattern;
+      selectedLogo = widget.qrData.logo;
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    _titleController = TextEditingController();
-    _sourceController = TextEditingController();
     _initializeQr();
   }
 
@@ -249,9 +265,9 @@ class _UpdateQrScreenState extends State<UpdateQrScreen> {
                       child: RoundedRectangleButton(
                         title: 'Update QR',
                         borderRadius: BorderRadius.circular(90),
-                        onPressed: () {
+                        onPressed: () async {
                           // Save Qr Data
-                          final QrCode qrData = _generateQr();
+                          final QrCode qrData = await _updateQr();
 
                           // Navigate To Results Screen
                           Navigator.push(

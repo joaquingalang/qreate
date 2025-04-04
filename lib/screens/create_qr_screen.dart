@@ -4,6 +4,8 @@ import 'package:qreate/utils/constants.dart';
 import 'package:qreate/utils/qr_patterns.dart';
 import 'package:qreate/utils/logos.dart';
 import 'package:qreate/models/qr_code.dart';
+import 'package:qreate/services/auth/auth_service.dart';
+import 'package:qreate/services/database/qr_database.dart';
 import 'package:qreate/widgets/app_bar/qreate_app_bar.dart';
 import 'package:qreate/widgets/qr/qr_view.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
@@ -20,6 +22,13 @@ class CreateQrScreen extends StatefulWidget {
 }
 
 class _CreateQrScreenState extends State<CreateQrScreen> {
+
+  // Supabase Authentication Service
+  final AuthService _auth = AuthService();
+
+  // Supabase QR Database Service
+  final QrDatabase _qrDatabase = QrDatabase();
+
   // Form Values
   late final TextEditingController _titleController;
   String title = '';
@@ -50,7 +59,9 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
   }
 
   QrCode _generateQr() {
-    QrCode newQrCode = QrCode(
+    final String? userId = _auth.getCurrentUserId();
+    QrCode newQr = QrCode(
+      userId: userId,
       title: title,
       source: source,
       pattern: selectedPattern,
@@ -58,7 +69,8 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
       pixelColor: pixelColor,
       logo: selectedLogo,
     );
-    return newQrCode;
+    _qrDatabase.createQr(newQr);
+    return newQr;
   }
 
   @override
