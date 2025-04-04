@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
+    <!-- Internet permission -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <!-- For Android 13+ (SDK 33+) -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
