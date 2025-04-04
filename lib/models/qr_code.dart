@@ -6,8 +6,9 @@ import 'package:qreate/utils/color_helpers.dart';
 class QrCode {
   const QrCode({
     this.id,
-    required this.title,
-    required this.source,
+    this.userId,
+    this.title = '',
+    this.source = '',
     this.canvasColor = Colors.white,
     this.pixelColor = Colors.black,
     this.pattern = QrPattern.classic,
@@ -15,6 +16,7 @@ class QrCode {
   });
 
   final int? id;
+  final String? userId;
   final String title;
   final String source;
   final Color canvasColor;
@@ -24,8 +26,10 @@ class QrCode {
 
   // Map to QrCode
   factory QrCode.fromMap(Map<String, dynamic> map) {
+    print(map);
     return QrCode(
       id: map['id'],
+      userId: map['user_id'],
       title: map['title'],
       source: map['source'],
       canvasColor: stringToColor(map['canvas_color']),
@@ -38,7 +42,7 @@ class QrCode {
   // QrCode to Map
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'user_id': userId,
       'title': title,
       'source': source,
       'canvas_color': colorToString(canvasColor),
