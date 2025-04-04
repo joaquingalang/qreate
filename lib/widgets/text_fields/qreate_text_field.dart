@@ -16,6 +16,7 @@ class QreateTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       style: kSubtext20,
       cursorColor: kBlueColor400,
       decoration: InputDecoration(
