@@ -1,10 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:qreate/screens/update_qr_screen.dart';
 import 'package:qreate/utils/constants.dart';
+import 'package:qreate/models/qr_code.dart';
+import 'package:qreate/services/database/qr_database.dart';
+import 'package:qreate/widgets/qr/qr_view.dart';
 
 class QrCard extends StatelessWidget {
   const QrCard({
     super.key,
+    required this.qrData,
+    required this.refresh,
   });
+
+  final QrCode qrData;
+  final VoidCallback refresh;
+
+  Future<void> _delete() async {
+    final QrDatabase _qrDatabase = QrDatabase();
+    print('!!! ${qrData.id}');
+    await _qrDatabase.deleteQr(qrData);
+    refresh();
+  }
+
+  void _update(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UpdateQrScreen(qrData: qrData),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +63,16 @@ class QrCard extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: Image.asset('assets/images/qreate_logo_gray.png', width: 80),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: QrView(
+                    source: qrData.source,
+                    selectedLogo: qrData.logo,
+                    selectedPattern: qrData.pattern,
+                    canvasColor: qrData.canvasColor,
+                    pixelColor: qrData.pixelColor,
+                  ),
+                ),
               ),
             ),
             Opacity(
@@ -57,18 +91,24 @@ class QrCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '  Title',
+                      '   ${_trimTitle(qrData.title)}',
                       style: kSubtext16.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: Colors.white,
-                      ),
+                    PopupMenuButton(
+                      iconColor: Colors.white,
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          onTap: () => _update(context),
+                          child: Text('Update'),
+                        ),
+                        PopupMenuItem(
+                          onTap: _delete,
+                          child: Text('Delete'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -78,5 +118,13 @@ class QrCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _trimTitle(String title) {
+    String trimmed = title;
+    if (title.length > 12) {
+      trimmed = '${title.substring(0, 11)}...';
+    }
+    return trimmed;
   }
 }
