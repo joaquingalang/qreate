@@ -8,7 +8,7 @@ import 'package:pretty_qr_code/pretty_qr_code.dart';
 class QrView extends StatelessWidget {
   const QrView({
     super.key,
-    required this.qrSize,
+    this.qrSize,
     required this.canvasColor,
     required this.source,
     required this.selectedLogo,
@@ -16,7 +16,7 @@ class QrView extends StatelessWidget {
     required this.pixelColor,
   });
 
-  final double qrSize;
+  final double? qrSize;
   final Color canvasColor;
   final String source;
   final Logos selectedLogo;
