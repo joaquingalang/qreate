@@ -19,11 +19,11 @@ class AuthService {
     await _supabase.auth.signOut();
   }
 
-  // TODO: Get user email
-  String? getCurrentUserEmail() {
+  // TODO: Get user id
+  String? getCurrentUserId() {
     final session = _supabase.auth.currentSession;
     final user = session?.user;
-    return user?.email;
+    return user?.id;
   }
 
   // TODO: Get session stream
