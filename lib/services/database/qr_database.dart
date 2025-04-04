@@ -11,9 +11,15 @@ class QrDatabase {
   }
 
   // TODO: Read QR Code
-  final qrStream = Supabase.instance.client.from('qr_codes').stream(
-    primaryKey: ['id'],
-  ).map((data) => data.map((qrMap) => QrCode.fromMap(qrMap)).toList());
+  Stream getStream() {
+    return Supabase.instance.client
+        .from('qr_codes')
+        .stream(
+          primaryKey: ['id'],
+        )
+        .eq('user_id', Supabase.instance.client.auth.currentUser!.id)
+        .map((data) => data.map((qrMap) => QrCode.fromMap(qrMap)).toList());
+  }
 
   // TODO: Update QR Code
   Future<void> updateQr(QrCode oldQr, QrCode newQr) async {
@@ -26,5 +32,4 @@ class QrDatabase {
   Future<void> deleteQr(QrCode qrCode) async {
     await _qrDatabase.delete().eq('id', qrCode.id!);
   }
-
 }
