@@ -5,11 +5,13 @@ class AuthFormField extends StatelessWidget {
   const AuthFormField({
     super.key,
     required this.onSaved,
+    this.validator,
     this.hintText,
     this.obscureText = false,
   });
 
   final Function(String?) onSaved;
+  final String? Function(String?)? validator;
   final String? hintText;
   final bool obscureText;
 
@@ -17,6 +19,7 @@ class AuthFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       onSaved: onSaved,
+      validator: validator,
       style: kSubtext20,
       cursorColor: kBlueColor400,
       obscureText: obscureText,
