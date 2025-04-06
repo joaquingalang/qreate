@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
+import 'package:qreate/utils/form_validators.dart';
 import 'package:qreate/services/auth/auth_service.dart';
 import 'package:qreate/widgets/text_fields/auth_form_field.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
@@ -146,6 +147,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             // Email Text Field
                             AuthFormField(
                               hintText: 'Email',
+                              validator: validateEmail,
                               onSaved: (value) {
                                 _email = value!;
                               },
@@ -158,6 +160,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             AuthFormField(
                               hintText: 'Password',
                               obscureText: true,
+                              validator: validateLoginPassword,
                               onSaved: (value) {
                                 _password = value!;
                               },
