@@ -13,6 +13,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   bool _showLogin = true;
 
+  // Toggle view between Sign-In and Sign-Up screen
   void toggleView() {
     setState(() {
       _showLogin = !_showLogin;
