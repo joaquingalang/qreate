@@ -13,6 +13,7 @@ import 'package:qreate/widgets/text_fields/qreate_text_field.dart';
 import 'package:qreate/widgets/select/pattern_select.dart';
 import 'package:qreate/widgets/buttons/color_picker_button.dart';
 import 'package:qreate/widgets/select/logo_select.dart';
+import 'package:qreate/widgets/bottom_sheets/upload_select_sheet.dart';
 
 class CreateQrScreen extends StatefulWidget {
   const CreateQrScreen({super.key});
@@ -22,7 +23,6 @@ class CreateQrScreen extends StatefulWidget {
 }
 
 class _CreateQrScreenState extends State<CreateQrScreen> {
-
   // Supabase Authentication Service
   final AuthService _auth = AuthService();
 
@@ -45,6 +45,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
 
   // Selected Logos
   Logos selectedLogo = Logos.none;
+  String? logoUrl;
 
   void _selectPattern(QrPattern pattern) {
     setState(() {
@@ -52,10 +53,36 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
     });
   }
 
-  void _selectLogo(Logos logo) {
+  void _selectLogo(Logos logo) async {
+
+    // If selected logo is upload
+    if (logo == Logos.upload) {
+
+      // Show upload select sheet
+      await showModalBottomSheet(
+        context: context,
+        builder: (context) => UploadSelectSheet(
+          onSelect: (url) {
+            setState(() {
+              logoUrl = url!;
+            });
+          },
+        ),
+      );
+
+      // If no uploaded logo was chosen set selected logo to none
+      if (logoUrl == null) {
+        setState(() {
+          logo = Logos.none;
+        });
+      }
+    }
+
+    // Update selected logo
     setState(() {
       selectedLogo = logo;
     });
+
   }
 
   QrCode _generateQr() {
@@ -68,6 +95,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
       canvasColor: canvasColor,
       pixelColor: pixelColor,
       logo: selectedLogo,
+      logoUrl: logoUrl,
     );
     _qrDatabase.createQr(newQr);
     return newQr;
@@ -123,6 +151,7 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                 pixelColor: pixelColor,
                 selectedPattern: selectedPattern,
                 selectedLogo: selectedLogo,
+                logoUrl: logoUrl,
               ),
 
               // Offset
@@ -140,137 +169,136 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
                   ),
                 ),
                 child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Offset
-                          SizedBox(height: 18),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Offset
+                    SizedBox(height: 18),
 
-                          // Title Label
-                          Text(
-                            'Title',
-                            style: kSubtext24B,
-                          ),
+                    // Title Label
+                    Text(
+                      'Title',
+                      style: kSubtext24B,
+                    ),
 
-                          // Offset
-                          SizedBox(height: 5),
+                    // Offset
+                    SizedBox(height: 5),
 
-                          // Title Form Field
-                          QreateTextField(
-                            hintText: 'Survey Form',
-                            controller: _titleController,
-                            onChanged: (value) {
-                              setState(() => title = value);
+                    // Title Form Field
+                    QreateTextField(
+                      hintText: 'Survey Form',
+                      controller: _titleController,
+                      onChanged: (value) {
+                        setState(() => title = value);
+                      },
+                    ),
+
+                    // Offset
+                    SizedBox(height: 18),
+
+                    // Title Label
+                    Text('Source', style: kSubtext24B),
+
+                    // Offset
+                    SizedBox(height: 5),
+
+                    // Source Form Field
+                    QreateTextField(
+                      hintText: 'www.example.com',
+                      controller: _sourceController,
+                      onChanged: (value) {
+                        setState(() => source = value);
+                      },
+                    ),
+
+                    // Offset
+                    SizedBox(height: 18),
+
+                    // Pattern Label
+                    Text('Pattern', style: kSubtext24B),
+
+                    // Offset
+                    SizedBox(height: 5),
+
+                    // Pattern Options
+                    PatternSelect(
+                      selected: selectedPattern,
+                      onSelect: _selectPattern,
+                    ),
+
+                    // Offset
+                    SizedBox(height: 18),
+
+                    // Color Label
+                    Text('Color', style: kSubtext24B),
+
+                    // Offset
+                    SizedBox(height: 5),
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ColorPickerButton(
+                            title: 'Canvas',
+                            color: canvasColor,
+                            onColorChanged: (Color color) {
+                              setState(() => canvasColor = color);
                             },
                           ),
-
-                          // Offset
-                          SizedBox(height: 18),
-
-                          // Title Label
-                          Text('Source', style: kSubtext24B),
-
-                          // Offset
-                          SizedBox(height: 5),
-
-                          // Source Form Field
-                          QreateTextField(
-                            hintText: 'www.example.com',
-                            controller: _sourceController,
-                            onChanged: (value) {
-                              setState(() => source = value);
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: ColorPickerButton(
+                            title: 'Pixels',
+                            color: pixelColor,
+                            onColorChanged: (Color color) {
+                              setState(() => pixelColor = color);
                             },
                           ),
+                        ),
+                      ],
+                    ),
 
-                          // Offset
-                          SizedBox(height: 18),
+                    // Offset
+                    SizedBox(height: 18),
 
-                          // Pattern Label
-                          Text('Pattern', style: kSubtext24B),
+                    // Select Logo Label
+                    Text('Select Logo', style: kSubtext24B),
 
-                          // Offset
-                          SizedBox(height: 5),
+                    // Offset
+                    SizedBox(height: 5),
 
-                          // Pattern Options
-                          PatternSelect(
-                            selected: selectedPattern,
-                            onSelect: _selectPattern,
-                          ),
+                    // Select Logo
+                    LogoSelect(
+                      selected: selectedLogo,
+                      onSelect: _selectLogo,
+                    ),
 
-                          // Offset
-                          SizedBox(height: 18),
+                    // Offset
+                    SizedBox(height: 18),
 
-                          // Color Label
-                          Text('Color', style: kSubtext24B),
+                    Center(
+                      child: RoundedRectangleButton(
+                        title: 'Generate QR',
+                        borderRadius: BorderRadius.circular(90),
+                        onPressed: () {
+                          // Save Qr Data
+                          final QrCode qrData = _generateQr();
 
-                          // Offset
-                          SizedBox(height: 5),
-
-                          Row(
-                            children: [
-                              Expanded(
-                                child: ColorPickerButton(
-                                  title: 'Canvas',
-                                  color: canvasColor,
-                                  onColorChanged: (Color color) {
-                                    setState(() => canvasColor = color);
-                                  },
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: ColorPickerButton(
-                                  title: 'Pixels',
-                                  color: pixelColor,
-                                  onColorChanged: (Color color) {
-                                    setState(() => pixelColor = color);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          // Offset
-                          SizedBox(height: 18),
-
-                          // Select Logo Label
-                          Text('Select Logo', style: kSubtext24B),
-
-                          // Offset
-                          SizedBox(height: 5),
-
-                          // Select Logo
-                          LogoSelect(
-                            selected: selectedLogo,
-                            onSelect: _selectLogo,
-                          ),
-
-                          // Offset
-                          SizedBox(height: 18),
-
-                          Center(
-                            child: RoundedRectangleButton(
-                              title: 'Generate QR',
-                              borderRadius: BorderRadius.circular(90),
-                              onPressed: () {
-                                // Save Qr Data
-                                final QrCode qrData = _generateQr();
-
-                                // Navigate To Results Screen
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        QrScreen(qrData: qrData),
-                                  ),
-                                );
-                              },
+                          // Navigate To Results Screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => QrScreen(qrData: qrData),
                             ),
-                          ),
-
-                          // Offset
-                          SizedBox(height: 18),
-                        ],
+                          );
+                        },
                       ),
+                    ),
+
+                    // Offset
+                    SizedBox(height: 18),
+                  ],
+                ),
               ),
             ],
           ),
