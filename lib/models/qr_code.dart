@@ -13,6 +13,7 @@ class QrCode {
     this.pixelColor = Colors.black,
     this.pattern = QrPattern.classic,
     this.logo = Logos.none,
+    this.logoUrl,
   });
 
   final int? id;
@@ -23,10 +24,10 @@ class QrCode {
   final Color pixelColor;
   final QrPattern pattern;
   final Logos logo;
+  final String? logoUrl;
 
   // Map to QrCode
   factory QrCode.fromMap(Map<String, dynamic> map) {
-    print(map);
     return QrCode(
       id: map['id'],
       userId: map['user_id'],
@@ -36,6 +37,7 @@ class QrCode {
       pixelColor: stringToColor(map['pixel_color']),
       pattern: stringToPattern[map['pattern']]!,
       logo: stringToLogo[map['logo']]!,
+      logoUrl: map['logo_url'],
     );
   }
 
@@ -49,6 +51,7 @@ class QrCode {
       'pixel_color': colorToString(pixelColor),
       'pattern': patternToString[pattern],
       'logo': logoToString[logo],
+      'logo_url': logoUrl,
     };
   }
 
