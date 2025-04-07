@@ -34,6 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       // Page App Bar
       appBar: AppBar(
         backgroundColor: kBlueColor500,
+        automaticallyImplyLeading: false,
         title: Row(
           spacing: 11,
           children: [
@@ -89,10 +90,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         pixelColor: qrCodes[index].pixelColor,
                         pattern: qrCodes[index].pattern,
                         logo: qrCodes[index].logo,
+                        logoUrl: qrCodes[index].logoUrl,
                       );
                       return QrCard(
                         qrData: qrCode,
-                        refresh: () => setState(() {}),
                       );
                     },
                   ),
