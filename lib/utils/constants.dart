@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Image Assets
 const String kAppLogoPath = 'assets/images/qreate_logo.png';
+const String kPlacholderLogoUrl = 'https://static-00.iconduck.com/assets.00/placeholder-icon-2048x2048-48kucnce.png';
 
 // BLUE COLORS
 const Color kBlueColor500 = Color(0xFF03045E);
