@@ -48,7 +48,7 @@ class QrView extends StatelessWidget {
           image: (selectedLogo == Logos.none)
               ? null
               : PrettyQrDecorationImage(
-            image: (selectedLogo == Logos.upload) ? NetworkImage(logoUrl ?? kPlacholderLogoPath) : AssetImage(logoSource[selectedLogo]),
+            image: (selectedLogo == Logos.upload) ? NetworkImage(logoUrl ?? kPlacholderLogoUrl) : AssetImage(logoSource[selectedLogo]),
           ),
         ),
       ),
