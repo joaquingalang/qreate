@@ -4,22 +4,20 @@ import 'package:qreate/screens/update_qr_screen.dart';
 import 'package:qreate/utils/constants.dart';
 import 'package:qreate/models/qr_code.dart';
 import 'package:qreate/services/database/qr_database.dart';
+import 'package:qreate/utils/logos.dart';
 import 'package:qreate/widgets/qr/qr_view.dart';
 
 class QrCard extends StatelessWidget {
   const QrCard({
     super.key,
     required this.qrData,
-    required this.refresh,
   });
 
   final QrCode qrData;
-  final VoidCallback refresh;
 
   Future<void> _delete() async {
-    final QrDatabase _qrDatabase = QrDatabase();
-    await _qrDatabase.deleteQr(qrData);
-    refresh();
+    final QrDatabase qrDatabase = QrDatabase();
+    await qrDatabase.deleteQr(qrData);
   }
 
   void _update(BuildContext context) {
@@ -81,6 +79,7 @@ class QrCard extends StatelessWidget {
                       selectedPattern: qrData.pattern,
                       canvasColor: qrData.canvasColor,
                       pixelColor: qrData.pixelColor,
+                      logoUrl: qrData.logoUrl,
                     ),
                   ),
                 ),
