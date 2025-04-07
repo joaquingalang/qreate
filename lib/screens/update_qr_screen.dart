@@ -13,6 +13,7 @@ import 'package:qreate/widgets/text_fields/qreate_text_field.dart';
 import 'package:qreate/widgets/select/pattern_select.dart';
 import 'package:qreate/widgets/buttons/color_picker_button.dart';
 import 'package:qreate/widgets/select/logo_select.dart';
+import 'package:qreate/widgets/bottom_sheets/upload_select_sheet.dart';
 
 class UpdateQrScreen extends StatefulWidget {
   const UpdateQrScreen({super.key, required this.qrData});
@@ -47,6 +48,7 @@ class _UpdateQrScreenState extends State<UpdateQrScreen> {
 
   // Selected Logos
   late Logos selectedLogo;
+  String? logoUrl;
 
   void _selectPattern(QrPattern pattern) {
     setState(() {
@@ -54,10 +56,36 @@ class _UpdateQrScreenState extends State<UpdateQrScreen> {
     });
   }
 
-  void _selectLogo(Logos logo) {
+  void _selectLogo(Logos logo) async {
+
+    // If selected logo is upload
+    if (logo == Logos.upload) {
+
+      // Show upload select sheet
+      await showModalBottomSheet(
+        context: context,
+        builder: (context) => UploadSelectSheet(
+          onSelect: (url) {
+            setState(() {
+              logoUrl = url!;
+            });
+          },
+        ),
+      );
+
+      // If no uploaded logo was chosen set selected logo to none
+      if (logoUrl == null) {
+        setState(() {
+          logo = Logos.none;
+        });
+      }
+    }
+
+    // Update selected logo
     setState(() {
       selectedLogo = logo;
     });
+
   }
 
   Future<QrCode> _updateQr() async {
@@ -70,6 +98,7 @@ class _UpdateQrScreenState extends State<UpdateQrScreen> {
       canvasColor: canvasColor,
       pixelColor: pixelColor,
       logo: selectedLogo,
+      logoUrl: logoUrl,
     );
     await _qrDatabase.updateQr(widget.qrData, newQr);
     return newQr;
@@ -87,6 +116,7 @@ class _UpdateQrScreenState extends State<UpdateQrScreen> {
       pixelColor = widget.qrData.pixelColor;
       selectedPattern = widget.qrData.pattern;
       selectedLogo = widget.qrData.logo;
+      logoUrl = widget.qrData.logoUrl;
     });
   }
 
@@ -137,6 +167,7 @@ class _UpdateQrScreenState extends State<UpdateQrScreen> {
                 pixelColor: pixelColor,
                 selectedPattern: selectedPattern,
                 selectedLogo: selectedLogo,
+                logoUrl: logoUrl,
               ),
 
               // Offset
