@@ -13,18 +13,21 @@ class QrView extends StatelessWidget {
     required this.source,
     required this.selectedLogo,
     required this.selectedPattern,
+    this.logoUrl,
     required this.pixelColor,
   });
 
   final double? qrSize;
-  final Color canvasColor;
   final String source;
-  final Logos selectedLogo;
-  final QrPattern selectedPattern;
+  final Color canvasColor;
   final Color pixelColor;
+  final QrPattern selectedPattern;
+  final Logos selectedLogo;
+  final String? logoUrl;
 
   @override
   Widget build(BuildContext context) {
+    print('LOGO URL $logoUrl');
     return Container(
       width: qrSize,
       padding: EdgeInsets.all(8),
@@ -45,7 +48,7 @@ class QrView extends StatelessWidget {
           image: (selectedLogo == Logos.none)
               ? null
               : PrettyQrDecorationImage(
-            image: AssetImage(logoSource[selectedLogo]),
+            image: (selectedLogo == Logos.upload) ? NetworkImage(logoUrl ?? kPlacholderLogoPath) : AssetImage(logoSource[selectedLogo]),
           ),
         ),
       ),
