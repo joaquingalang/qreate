@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qreate/utils/constants.dart';
 import 'package:qreate/utils/form_validators.dart';
+import 'package:qreate/services/connectivity/connectivity_service.dart';
 import 'package:qreate/services/auth/auth_service.dart';
 import 'package:qreate/widgets/text_fields/auth_form_field.dart';
 import 'package:qreate/widgets/buttons/rounded_rectangle_button.dart';
@@ -16,6 +17,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  // Connectivity Service
+  final ConnectivityService _connectivity = ConnectivityService();
 
   // Supabase Authentication Service
   final AuthService _auth = AuthService();
@@ -33,23 +36,29 @@ class _SignInScreenState extends State<SignInScreen> {
     FocusScope.of(context).unfocus();
     setState(() => _isLoading = true);
 
-    // Retrieve & Validate Form Data
-    FormState formData = _signInFormKey.currentState!;
-    if (formData.validate()) {
-      // Save Form State
-      formData.save();
+    final bool isConnected = await _connectivity.checkConnectivity();
+    if (isConnected) {
 
-      // TODO: Check if passwords match
-      try {
-        final result = await _auth.signInWithEmailPassword(email: _email, password: _password);
-      } catch (e) {
-        print('Sign-In Error: $e');
+      // Retrieve & Validate Form Data
+      FormState formData = _signInFormKey.currentState!;
+      if (formData.validate()) {
+        // Save Form State
+        formData.save();
+
+        try {
+          final result = await _auth.signInWithEmailPassword(
+              email: _email, password: _password);
+        } catch (e) {
+          print('Sign-In Error: $e');
+        }
       }
+    } else {
+      // TODO: Visually Indicate No Internet Connection
+      print('NO INTERNET CONNECTION!');
     }
 
     // Stop Loading State
     setState(() => _isLoading = false);
-
   }
 
   @override
@@ -131,8 +140,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       )
                     : Form(
-                      key: _signInFormKey,
-                      child: Column(
+                        key: _signInFormKey,
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             // Form Message
@@ -174,7 +183,8 @@ class _SignInScreenState extends State<SignInScreen> {
                               alignment: Alignment.centerRight,
                               child: GestureDetector(
                                 onTap: () {},
-                                child: Text('Forgot Password', style: kSubtext16),
+                                child:
+                                    Text('Forgot Password', style: kSubtext16),
                               ),
                             ),
 
@@ -207,7 +217,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                           ],
                         ),
-                    ),
+                      ),
               ),
             ],
           ),

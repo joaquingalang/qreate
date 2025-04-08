@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qreate/services/connectivity/connectivity_service.dart';
 import 'package:qreate/utils/constants.dart';
 import 'package:qreate/utils/form_validators.dart';
 import 'package:qreate/services/auth/auth_service.dart';
@@ -16,6 +17,10 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
+  // Connectivity Service
+  final ConnectivityService _connectivity = ConnectivityService();
+
   // Supabase Authentication Service
   final AuthService _auth = AuthService();
 
@@ -34,21 +39,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
     FocusScope.of(context).unfocus();
     setState(() => _isLoading = true);
 
-    // Retrieve Form Content & Validate Form
-    FormState formData = _signUpFormKey.currentState!;
-    if (formData.validate()) {
-      // Save Form Data
-      formData.save();
-      try {
-        final result =
-            _auth.signUpWithEmailPassword(email: _email, password: _password);
-      } catch (e) {
-        print('Sign-Up Error: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('$e')),
-        );
+    final bool isConnected = await _connectivity.checkConnectivity();
+
+    if (isConnected) {
+      // Retrieve Form Content & Validate Form
+      FormState formData = _signUpFormKey.currentState!;
+      if (formData.validate()) {
+        // Save Form Data
+        formData.save();
+        try {
+          final result =
+          _auth.signUpWithEmailPassword(email: _email, password: _password);
+        } catch (e) {
+          print('Sign-Up Error: $e');
+
+        }
       }
+    } else {
+      // TODO: Visually Indicate No Internet Connection
+      print('NO INTERNET CONNECTION!');
     }
+
     // Stop Loading State
     setState(() => _isLoading = false);
 
@@ -175,6 +186,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             AuthFormField(
                               hintText: 'Confirm Password',
                               obscureText: true,
+                              // TODO: Check if password and confirm password match
                               validator: validateConfirmPassword,
                               onSaved: (value) {
                                 _confirmPassword = value!;
