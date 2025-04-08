@@ -58,11 +58,18 @@ class _CreateQrScreenState extends State<CreateQrScreen> {
     // If selected logo is upload
     if (logo == Logos.upload) {
 
+      // Reset logo url
+      setState(() {
+        logoUrl = null;
+      });
+
       // Show upload select sheet
       await showModalBottomSheet(
         context: context,
         builder: (context) => UploadSelectSheet(
           onSelect: (url) {
+
+            // Give logo url new value
             setState(() {
               logoUrl = url!;
             });
