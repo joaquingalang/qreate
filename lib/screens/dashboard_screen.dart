@@ -1,5 +1,9 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:qreate/models/qr_code.dart';
+import 'package:qreate/services/connectivity/connectivity_service.dart';
 import 'package:qreate/utils/constants.dart';
 import 'package:qreate/services/auth/auth_service.dart';
 import 'package:qreate/services/database/qr_database.dart';
@@ -16,6 +20,11 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+
+  // Connectivity Service & State
+  final ConnectivityService _connectivity = ConnectivityService();
+  bool _isConnected = true;
+
   // Supabase Authentication Service
   final AuthService _auth = AuthService();
 
@@ -24,6 +33,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _signOut() async {
     await _auth.signOut();
+  }
+
+  void _updateConnectionStatus(List<ConnectivityResult> result) {
+    if (result.contains(ConnectivityResult.none)) {
+      setState(() => _isConnected = false);
+    } else {
+      setState(() => _isConnected = true);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    StreamSubscription<List<ConnectivityResult>> connectionSubscription = _connectivity.getSubscription(_updateConnectionStatus);
   }
 
   @override
@@ -58,6 +81,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: StreamBuilder(
           stream: _qrDatabase.getStream(),
           builder: (context, snapshot) {
+
+            if (!_isConnected) {
+              return NoInternetIndicator();
+            }
+
             if (!snapshot.hasData) {
               return LoadingIcon(
                 icon: Icon(
@@ -108,6 +136,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
             builder: (context) => CreateQrScreen(),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class NoInternetIndicator extends StatelessWidget {
+  const NoInternetIndicator({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 8,
+        children: [
+
+          // No internet icon
+          Icon(
+            Icons.signal_wifi_connected_no_internet_4,
+            size: 70,
+            color: Colors.grey,
+          ),
+
+          // No internet message
+          Text(
+            'No internet connection',
+            style: kSubtext20.copyWith(color: Colors.grey),
+          ),
+
+          // Offset
+          SizedBox(height: 16),
+        ],
       ),
     );
   }
